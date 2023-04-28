@@ -1,0 +1,20 @@
+{
+    "name": "iShape.FixFloat.Tests",
+    "rootNamespace": "",
+    "optionalUnityReferences": [
+        "TestAssemblies"
+    ],
+    "references": [
+        "iShape.FixFloat",
+        "Unity.Collections",
+        "Unity.Mathematics"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": []
+}

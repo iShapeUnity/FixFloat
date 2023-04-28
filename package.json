@@ -1,0 +1,29 @@
+{
+  "name": "com.ishape.fixfloat",
+  "version": "0.0.1",
+  "displayName": "iShape.FixFloat",
+  "description": "A lightweight library to do fixed-point math.",
+  "unity": "2022.2",
+  "keywords": [
+    "Fixed-point arithmetic",
+    "Deterministic math",
+    "2D geometry",
+    "Trigonometry",
+    "Angle conversion",
+    "Fixed-point vectors",
+    "Rotation matrix"
+  ],
+  "license": "MIT",
+  "author": {
+    "name": "iShape",
+    "email": "nailxsharipov@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/iShapeUnity/FixFloat.git"
+  },
+  "dependencies": {
+    "com.unity.mathematics": "1.2.6",
+    "com.unity.collections": "1.2.4"
+  }
+}
