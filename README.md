@@ -74,6 +74,6 @@ This library is designed to be compatible with Unity and the Burst Compiler, ena
 
 ## License
 
-This Fixed Float Math Library is released under the **MIT License**.
+This Fixed Float Math Library is released under the [MIT license](https://en.wikipedia.org/wiki/MIT_License).
 
 
