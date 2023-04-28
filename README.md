@@ -47,6 +47,7 @@ float resultAsFloat = result.ToFloat();
 ```
 
 ### FixVec
+
 The \`**FixVec**\` struct represents a 2D fixed-point vector, providing various utility methods and operators for vector operations. Use \`**FixVec**\` for 2D geometric calculations when deterministic behavior is required.
 
 ```csharp
@@ -56,3 +57,23 @@ FixVec vec2 = new FixVec(3.0f.ToFix(), 4.0f.ToFix());
 FixVec sum = vec1 + vec2;
 FixVec difference = vec1 - vec2;
 ```
+
+### FixAngle
+The \`**FixAngle**\` class provides various utility methods for working with fixed-point angles, including trigonometric functions and angle conversion.
+
+
+```csharp
+long angle = (Mathf.PI / 2).ToFix().RadToFixAngle();
+long sin = angle.Sin();
+long cos = angle.Cos();
+```
+
+## Compatibility
+
+This library is designed to be compatible with Unity and the Burst Compiler, enabling high-performance arithmetic and geometric operations in Unity projects that utilize the job system and Burst.
+
+## License
+
+This Fixed Float Math Library is released under the **MIT License**.
+
+
