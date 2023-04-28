@@ -44,11 +44,11 @@ Fixed-point numbers are represented using a fixed number of bits for the fractio
 
 Here are some examples of fixed-point number representation:
 
-1 / 1024 ≈ 0.001 (represented as 1)
-256 / 1024 = 0.25 (represented as 256)
-1024 / 1024 = 1 (represented as 1024)
-(1024 + 512) / 1024 = 1.5 (represented as 1536)
-(2048 + 256) / 1024 = 2.25 (represented as 2304)
+- 1 / 1024 ≈ 0.001 (represented as 1)
+- 256 / 1024 = 0.25 (represented as 256)
+- 1024 / 1024 = 1 (represented as 1024)
+- (1024 + 512) / 1024 = 1.5 (represented as 1536)
+- (2048 + 256) / 1024 = 2.25 (represented as 2304)
 
 By using the \`**FixNumber**\` class, you can perform arithmetic operations using long values while maintaining the precision of floating-point numbers, ensuring deterministic behavior across different platforms and devices.
 
