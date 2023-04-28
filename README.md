@@ -38,3 +38,21 @@ using iShape.FixFloat;
 ### FixNumber
 
 The \`**FixNumber**\` class represents a fixed-point number using a \`**long**\` as the underlying storage, allowing deterministic arithmetic operations. Use \`**FixNumber**\` for calculations instead of \`**float**\` or \`**double**\` when deterministic behavior is required. \`**FixNumber**\` provides a way to perform arithmetic operations with \`**long**\` values while maintaining the precision of floating-point numbers.
+
+```csharp
+long a = 3.14f.ToFix();
+long b = 2.0f.ToFix();
+long result = a * b;
+float resultAsFloat = result.ToFloat();
+```
+
+### FixVec
+The \`**FixVec**\` struct represents a 2D fixed-point vector, providing various utility methods and operators for vector operations. Use \`**FixVec**\` for 2D geometric calculations when deterministic behavior is required.
+
+```csharp
+FixVec vec1 = new FixVec(1.0f.ToFix(), 2.0f.ToFix());
+FixVec vec2 = new FixVec(3.0f.ToFix(), 4.0f.ToFix());
+
+FixVec sum = vec1 + vec2;
+FixVec difference = vec1 - vec2;
+```
