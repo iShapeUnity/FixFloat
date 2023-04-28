@@ -32,3 +32,9 @@ To use iShape.FixFloat in your Unity project, follow these steps:
 ```csharp
 using iShape.FixFloat;
 ```
+
+## Usage
+
+### FixNumber
+
+The \`**FixNumber**\` class represents a fixed-point number using a \`**long**\` as the underlying storage, allowing deterministic arithmetic operations. Use \`**FixNumber**\` for calculations instead of \`**float**\` or \`**double**\` when deterministic behavior is required. \`**FixNumber**\` provides a way to perform arithmetic operations with \`**long**\` values while maintaining the precision of floating-point numbers.
