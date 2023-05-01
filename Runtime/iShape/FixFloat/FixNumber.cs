@@ -10,6 +10,7 @@ namespace iShape.FixFloat {
     /// </summary>
     public static class FixNumber
     {
+        
         /// <summary>
         /// The number of bits representing the fractional part of the fixed-point number.
         /// 1 / 1024 ~ 0.001 = 1

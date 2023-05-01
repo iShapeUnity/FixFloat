@@ -2,68 +2,6 @@ using System.Runtime.CompilerServices;
 
 namespace iShape.FixFloat {
 
-    public readonly struct RotationMatrix
-    {
-        /// <summary>
-        /// The sine value of the rotation angle.
-        /// </summary>
-        public readonly long Sin;
-        
-        /// <summary>
-        /// The cosine value of the rotation angle.
-        /// </summary>
-        public readonly long Cos;
-
-        /// <summary>
-        /// Creates a new RotationMatrix with the specified sine and cosine values.
-        /// </summary>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public RotationMatrix(long sin, long cos)
-        {
-            Sin = sin;
-            Cos = cos;
-        }
-
-        /// <summary>
-        /// Rotates a FixVec forward using this rotation matrix.
-        /// </summary>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public FixVec RotateForward(FixVec p)
-        {
-            if (Sin == 0 && Cos == 1024)
-            {
-                return p;
-            }
-            else
-            {
-                FixVec v = new FixVec(Sin, Cos);
-                long x = -v.CrossProduct(p); // -v.x(sin) * p.y + v.y(cos) * p.x
-                long y = v.DotProduct(p);    // v.x(sin) * p.x + v.y(cos) * p.y
-                return new FixVec(x, y);
-            }
-        }
-
-        /// <summary>
-        /// Rotates a FixVec back using this rotation matrix.
-        /// </summary>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public FixVec RotateBack(FixVec p)
-        {
-            if (Sin == 0 && Cos == 1024)
-            {
-                return p;
-            }
-            else
-            {
-                FixVec v = new FixVec(Cos, Sin);
-                long x = v.DotProduct(p);   // v.x(cos) * p.x + v.y(sin) * p.y
-                long y = v.CrossProduct(p); // v.x(cos) * p.y - v.y(sin) * p.x
-
-                return new FixVec(x, y);
-            }
-        }
-    }
-    
     public static class FixAngle {
 
         private const long IndexMask = 256 - 1;
@@ -117,7 +55,7 @@ namespace iShape.FixFloat {
         /// Returns a rotation matrix for the specified angle.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static RotationMatrix Rotator(this long angle)
+        public static FixVec Rotator(this long angle)
         {
             int quarter = (int)(angle & FullRoundMask) >> 8;
             int index = (int)(angle & IndexMask);
@@ -145,7 +83,7 @@ namespace iShape.FixFloat {
                     break;
             }
 
-            return new RotationMatrix(sn, cs);
+            return new FixVec(cs, sn);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
