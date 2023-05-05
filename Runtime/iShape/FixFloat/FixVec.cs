@@ -49,7 +49,7 @@ namespace iShape.FixFloat {
         /// <summary>
         /// Calculates the squared length of the vector.
         /// </summary>
-        public long SqrLength => (x * x + y * y) >> FixNumber.FractionBits;
+        public long SqrLength => (x * x + y * y).FastNormalize();
 
         /// <summary>
         /// Calculates the length of the vector.
@@ -63,8 +63,8 @@ namespace iShape.FixFloat {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get {
                 long s = (1L << 30) / Length;
-                long xx = (s * x) >> 20;
-                long yy = (s * y) >> 20;
+                long xx = (s * x).SQRNormalize();
+                long yy = (s * y).SQRNormalize();
                 
                 return new FixVec(xx, yy);
             }
@@ -73,7 +73,7 @@ namespace iShape.FixFloat {
         /// <summary>
         /// Returns a vector with half the length of the original vector.
         /// </summary>
-        public FixVec Half => new FixVec(x >> 1, y >> 1);
+        public FixVec Half => new FixVec(x / 2, y / 2);
 
         /// <summary>
         /// Returns an orthogonal vector, normalized and rotated 90 degrees clockwise or counterclockwise.
@@ -85,16 +85,6 @@ namespace iShape.FixFloat {
             return clockwise
                 ? new FixVec(y, -x).Normalize
                 : new FixVec(-y, x).Normalize;
-        }
-        
-        /// <summary>
-        /// Divides the vector coordinates by 2^count.
-        /// </summary>
-        /// <param name="count">The exponent to divide the vector coordinates by.</param>
-        /// <returns>A new vector with divided coordinates.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public FixVec DivTwo(int count) {
-            return new FixVec(x >> count, y >> count);
         }
 
         /// <summary>
@@ -118,8 +108,8 @@ namespace iShape.FixFloat {
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static FixVec operator *(FixVec left, long right) {
-            long x = (left.x * right) >> FixNumber.FractionBits;
-            long y = (left.y * right) >> FixNumber.FractionBits;
+            long x = left.x.Mul(right);
+            long y = left.y.Mul(right);
             return new FixVec(x, y);
         }
         
@@ -128,8 +118,8 @@ namespace iShape.FixFloat {
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static FixVec operator *(long left, FixVec right) {
-            long x = (left * right.x) >> FixNumber.FractionBits;
-            long y = (left * right.y) >> FixNumber.FractionBits;
+            long x = right.x.Mul(left);
+            long y = right.y.Mul(left);
             return new FixVec(x, y);
         }
         
@@ -139,8 +129,8 @@ namespace iShape.FixFloat {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public long DotProduct(FixVec v)
         {
-            long xx = (x * v.x) >> FixNumber.FractionBits;
-            long yy = (y * v.y) >> FixNumber.FractionBits;
+            long xx = x.Mul(v.x);
+            long yy = y.Mul(v.y);
             return xx + yy;
         }
 
@@ -150,8 +140,8 @@ namespace iShape.FixFloat {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public long CrossProduct(FixVec v)
         {
-            long a = (x * v.y) >> FixNumber.FractionBits;
-            long b = (y * v.x) >> FixNumber.FractionBits;
+            long a = x.Mul(v.y);
+            long b = y.Mul(v.x);
 
             return a - b;
         }
@@ -160,10 +150,9 @@ namespace iShape.FixFloat {
         /// Calculates the cross product of a fixed-point vector and a scalar.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public FixVec CrossProduct(long a)
-        {
-            long x0 = (a * y) >> FixNumber.FractionBits;
-            long y0 = (a * x) >> FixNumber.FractionBits;
+        public FixVec CrossProduct(long a) {
+            long x0 = a.Mul(y);
+            long y0 = a.Mul(x);
 
             return new FixVec(-x0, y0);
         }
@@ -184,7 +173,12 @@ namespace iShape.FixFloat {
         public FixVec Middle(FixVec v)
         {
             FixVec sum = this + v;
-            return new FixVec(sum.x >> 1, sum.y >> 1);
+            return new FixVec(sum.x / 2, sum.y / 2);
+        }
+        
+        public override string ToString()
+        {
+            return $"({x}, {y})";
         }
     }
 

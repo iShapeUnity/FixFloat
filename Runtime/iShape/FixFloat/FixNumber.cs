@@ -42,6 +42,11 @@ namespace iShape.FixFloat {
         public const long Unit = 1L << FractionBits;
         
         /// <summary>
+        /// The fixed-point representation of 1024.0
+        /// </summary>
+        public const long SQRUnit = 1L << 2 * FractionBits;
+        
+        /// <summary>
         /// The fixed-point representation of 0.5.
         /// </summary>
         public const long Half = 1L << (FractionBits - 1);
@@ -66,7 +71,7 @@ namespace iShape.FixFloat {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static long Mul(this long number, long value)
         {
-            return (number * value) >> FractionBits;
+            return (number * value).Normalize();
         }
 
         /// <summary>
@@ -75,7 +80,16 @@ namespace iShape.FixFloat {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static long Sqr(this long number)
         {
-            return (number * number) >> FractionBits;
+            return (number * number).Normalize();
+        }
+        
+        /// <summary>
+        /// Calculates the square of a fixed-point number.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static long FastSqr(this long number)
+        {
+            return (number * number).FastNormalize();
         }
 
         /// <summary>
@@ -111,7 +125,7 @@ namespace iShape.FixFloat {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int ToInt(this long number)
         {
-            return (int)(number >> FractionBits);
+            return (int)number.Normalize();
         }
 
         /// <summary>
@@ -149,11 +163,25 @@ namespace iShape.FixFloat {
         {
             return (long)value << FractionBits;
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static long Normalize(this long value) {
+            return value / Unit;
+        }
+        
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static long SQRNormalize(this long value) {
+            return value / SQRUnit;
+        }
+        
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static long FastNormalize(this long value) {
+            return value >> FractionBits;
+        }
     }
 
     internal static class Int64FastRoot
     {
-
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static long FastSquareRoot(this long number) {
             long a = (long)System.Math.Sqrt(number);
