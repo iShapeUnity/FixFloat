@@ -62,7 +62,7 @@ The \`**FixNumber**\` class represents a fixed-point number using a \`**long**\`
 ```csharp
 long a = 3.14f.ToFix();
 long b = 2.0f.ToFix();
-long result = a * b;
+long result = a.Mul(b);
 float resultAsFloat = result.ToFloat();
 ```
 
