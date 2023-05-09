@@ -31,8 +31,13 @@ namespace iShape.FixFloat {
         /// <summary>
         /// Returns a zero vector (0, 0).
         /// </summary>
-        public static FixVec Zero => new FixVec(0, 0);
+        public static FixVec Zero => new(0, 0);
 
+        /// <summary>
+        /// Additive inverse (Negative)
+        /// </summary>
+        public FixVec Negative => new(-x, -y);
+        
         /// <summary>
         /// Packs the X and Y coordinates into a single long value.
         /// </summary>
@@ -123,6 +128,14 @@ namespace iShape.FixFloat {
             return new FixVec(x, y);
         }
         
+        public static bool operator ==(FixVec a, FixVec b) {
+            return a.x == b.x && a.y == b.y;
+        }
+
+        public static bool operator !=(FixVec a, FixVec b) {
+            return a.x != b.x || a.y != b.y;
+        }
+        
         /// <summary>
         /// Calculates the dot product of two fixed-point vectors.
         /// </summary>
@@ -176,6 +189,19 @@ namespace iShape.FixFloat {
             return new FixVec(sum.x / 2, sum.y / 2);
         }
         
+        /// <summary>
+        /// Calculates the length of the vector by it unit vector.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public long LengthByUnit(FixVec unit)
+        {
+            if (math.abs(unit.x) > math.abs(unit.y)) {
+                return x.Div(unit.x);
+            } else {
+                return y.Div(unit.y);
+            }
+        }
+
         public override string ToString()
         {
             return $"({x}, {y})";
